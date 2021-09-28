@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const generateUrl = require('./generate_url')
 
 const Url = require('./models/url.js')
 
@@ -34,8 +35,7 @@ app.get('/', (req, res) => {
 
 app.post('/shorteningUrl', (req, res) => {
   const inputUrl = req.body.inputUrl
-  const outputUrl = 'https://localhost:3000/shorturl/revdl'
-  console.log(inputUrl)
+  const outputUrl = generateUrl()
   return Url.create({ inputUrl, outputUrl })
   .then(() => res.redirect('/'))
   .catch(error => console.log(error))
