@@ -2,6 +2,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
+
+const Url = require('./models/url.js')
 
 const app = express()
 
@@ -21,9 +24,21 @@ db.once('open', () => {
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs'}))
 app.set('view engine', 'hbs')
 
-// route setting
+// 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// routes setting
 app.get('/', (req, res) => {
   res.render('index')
+})
+
+app.post('/shorteningUrl', (req, res) => {
+  const inputUrl = req.body.inputUrl
+  const outputUrl = 'https://localhost:3000/shorturl/revdl'
+  console.log(inputUrl)
+  return Url.create({ inputUrl, outputUrl })
+  .then(() => res.redirect('/'))
+  .catch(error => console.log(error))
 })
 
 // start and listen on the Express server
