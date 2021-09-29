@@ -1,0 +1,33 @@
+
+<div class="d-flex flex-column align-items-center mt-5">
+  <h1>URL shortener</h1>
+  <img src="https://assets-lighthouse.alphacamp.co/uploads/image/file/16716/ExportedContentImage_00.png"
+    alt="url shortener front page image" style="width: 200px;">
+  {{#if url}}
+  <h1>We have had shortened the url before to this one:</h1>
+  <div style="font-size: 30px;">
+    <a href="{{ url.inputUrl }}"  target="_blank" id="copyText">{{ url.outputUrl }}</a>
+  </div>
+
+  {{else}}
+  <h1>The url has been shortened as below:</h1>
+  <div style="font-size: 30px;">
+    <a href="{{ inputUrl }}" target="_blank" id="copyText">{{ newOutputUrl }}</a>
+  </div>
+  {{/if}}
+</div>
+
+<input type="button" class="btn btn-primary" onclick="copyLink()" data-toggle="tooltip" title="Copy to Clipboard"
+  value="copy link" readonly />
+
+<script>
+  function copyLink() {
+    let copyText = document.getElementById("copyText")
+    const selection = window.getSelection()
+    const range = document.createRange()
+    range.selectNodeContents(copyText)
+    selection.removeAllRanges()
+    selection.addRange(range)
+    document.execCommand('copy')
+  }
+</script>

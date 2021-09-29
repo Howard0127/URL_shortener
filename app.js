@@ -29,16 +29,29 @@ app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // routes setting
+// 首頁
 app.get('/', (req, res) => {
   res.render('index')
 })
 
+// 找出或產生短網址
 app.post('/shorteningUrl', (req, res) => {
   const inputUrl = req.body.inputUrl
-  const outputUrl = generateUrl()
-  return Url.create({ inputUrl, outputUrl })
-  .then(() => res.redirect('/'))
-  .catch(error => console.log(error))
+  return Url.findOne({ inputUrl })
+    .lean()
+    .then((url) => {
+      // 從inputUrl判斷資料庫有沒有該筆資料
+      // 沒有的話產生一個新的短網址newOutputUrl，和inputUrl存入資料庫後渲染
+      // 有的話，剛該筆資料渲染在畫面上
+      if(!url) {
+        const newOutputUrl = generateUrl()
+        Url.create({ inputUrl, outputUrl: newOutputUrl })
+          .then(() => res.render('output', { inputUrl, newOutputUrl }))
+      } else {
+        res.render('output', { url })
+      }
+    })
+    .catch(error => console.log(error))
 })
 
 // start and listen on the Express server
