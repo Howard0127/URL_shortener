@@ -15,10 +15,8 @@
     <a href="{{ inputUrl }}" target="_blank" id="copyText">{{ newOutputUrl }}</a>
   </div>
   {{/if}}
+  <input type="button" class="btn btn-primary" onclick="copyLink()" value="copy link"/>
 </div>
-
-<input type="button" class="btn btn-primary" onclick="copyLink()" data-toggle="tooltip" title="Copy to Clipboard"
-  value="copy link" readonly />
 
 <script>
   function copyLink() {

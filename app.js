@@ -42,7 +42,7 @@ app.post('/shorteningUrl', (req, res) => {
     .then((url) => {
       // 從inputUrl判斷資料庫有沒有該筆資料
       // 沒有的話產生一個新的短網址newOutputUrl，和inputUrl存入資料庫後渲染
-      // 有的話，剛該筆資料渲染在畫面上
+      // 有的話，該筆資料渲染在畫面上
       if(!url) {
         const newOutputUrl = generateUrl()
         Url.create({ inputUrl, outputUrl: newOutputUrl })
@@ -53,6 +53,16 @@ app.post('/shorteningUrl', (req, res) => {
     })
     .catch(error => console.log(error))
 })
+
+// 直接在瀏覽器上貼上短網址後開啟該網頁
+app.get('/tinyURL/:tailCode', (req, res) => {
+  const tailCode = req.params.tailCode
+  // console.log(tailCode)
+  return Url.findOne({ outputUrl: {$regex: tailCode}})
+    .lean()
+    .then((url => res.redirect(url.inputUrl)))
+})
+
 
 // start and listen on the Express server
 app.listen(3000, () => {
