@@ -3,19 +3,24 @@
   <h1>URL shortener</h1>
   <img src="https://assets-lighthouse.alphacamp.co/uploads/image/file/16716/ExportedContentImage_00.png"
     alt="url shortener front page image" style="width: 200px;">
-  {{#if url}}
-  <h1>We have had shortened the url before to this one:</h1>
-  <div style="font-size: 30px;">
-    <a href="{{ url.inputUrl }}"  target="_blank" id="copyText">{{ url.outputUrl }}</a>
+  <div class="result mt-5">
+    {{#if url}}
+    <h2>We have had shortened the url before to this one:</h2>
+    <div style="font-size: 30px; text-align:center;">
+      <a href="{{ url.inputUrl }}" target="_blank" id="copyText">{{ url.outputUrl }}</a>
+    </div>
+    
+    {{else}}
+    <h2>The url has been shortened as below:</h2>
+    <div style="font-size: 30px; text-align:center;">
+      <a href="{{ inputUrl }}" target="_blank" id="copyText">{{ newOutputUrl }}</a>
+    </div>
+    {{/if}}
   </div>
-
-  {{else}}
-  <h1>The url has been shortened as below:</h1>
-  <div style="font-size: 30px;">
-    <a href="{{ inputUrl }}" target="_blank" id="copyText">{{ newOutputUrl }}</a>
+  <div class="buttons mt-5">
+    <button class="btn btn-outline-primary" onclick="copyLink()">Copy Link</button>
+    <a href="/" class="btn btn-outline-primary">Shorten one more</a>
   </div>
-  {{/if}}
-  <input type="button" class="btn btn-primary" onclick="copyLink()" value="copy link"/>
 </div>
 
 <script>
