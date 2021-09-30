@@ -17,7 +17,7 @@
 
 ## Installation Instruction
 
-- Clone the project by pasting URL in the terminal or [download here]()
+- Clone the project by pasting URL in the terminal or [download here](https://github.com/Howard0127/URL_shortener/archive/refs/heads/main.zip)
 
   ```
   git clone https://github.com/Howard0127/URL_shortener.git
@@ -35,7 +35,7 @@
 
 - Run the project
   ```
-  run npm start
+  npm run start
   ```
 - Terminal shows "App is running on http://localhost:3000.", "mongodb connected!" when succeed
 - Paste http://localhost:3000/ on a browser to run the web app
