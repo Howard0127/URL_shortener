@@ -14,7 +14,7 @@ function generateUrl() {
     randomStr += randomLetter(letters)
   }
 
-  return outputUrl = `http://localhost:3000/tinyURL/${randomStr}` 
+  return outputUrl = `http://localhost:3000/${randomStr}` 
 }
 
 module.exports = generateUrl
