@@ -35,7 +35,15 @@ router.get('/:tailCode', (req, res) => {
   const tailCode = req.params.tailCode
   return Url.findOne({ outputUrl: {$regex: tailCode}})
     .lean()
-    .then((url => res.redirect(url.inputUrl)))
+    .then((url) => {
+      if (!url) {
+        const wrongUrl = { tailCode } 
+        res.render('output', {wrongUrl} )
+      } else {
+        res.redirect(url.inputUrl)
+      }  
+    })
+    .catch(error => console.log(error))
 })
 
 module.exports = router

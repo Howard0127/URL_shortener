@@ -4,22 +4,38 @@
   <img src="https://assets-lighthouse.alphacamp.co/uploads/image/file/16716/ExportedContentImage_00.png"
     alt="url shortener front page image" style="width: 200px;">
   <div class="result mt-5">
-    {{#if url}}
-    <h2>We have had shortened the url before to this one:</h2>
-    <div style="font-size: 30px; text-align:center;">
-      <a href="{{ url.inputUrl }}" target="_blank" id="copyText">{{ url.outputUrl }}</a>
-    </div>
-    
-    {{else}}
-    <h2>The url has been shortened as below:</h2>
-    <div style="font-size: 30px; text-align:center;">
-      <a href="{{ inputUrl }}" target="_blank" id="copyText">{{ newOutputUrl }}</a>
-    </div>
-    {{/if}}
+  {{!-- 傳入已存在的資料時  --}}
+  {{#if url}}
+  <h2>We have had shortened the url before to this one:</h2>
+  <div style="font-size: 30px; text-align:center;">
+    <a href="{{ url.inputUrl }}" target="_blank" id="copyText">{{ url.outputUrl }}</a>
+  </div> 
+  {{else}}
+      {{!-- 傳入新建好的資料時 --}}
+      {{#if inputUrl}}
+      <h2>We just generate a new short url for you:</h2>
+      <div style="font-size: 30px; text-align:center;">
+        <a href="{{ inputUrl }}" target="_blank" id="copyText">{{ newOutputUrl }}</a>
+      </div>
+      {{else}}
+          {{!-- 使用者輸入不存在短網址時 --}}
+          {{#if wrongUrl}}
+          <div class="alert alert-primary" role="alert">
+            The short url: <a href="#" class="alert-link">http://localhost:3000/{{wrongUrl.tailCode}}</a> is not in the database. Try again please.
+          </div>
+          {{/if}}
+      {{/if}}
+  {{/if}}
   </div>
+
   <div class="buttons mt-5">
+    {{!-- 使用者輸入不存在短網址時，只留下回首頁按鍵 --}}
+    {{#unless wrongUrl}}
     <button class="btn btn-outline-primary" onclick="copyLink()">Copy Link</button>
     <a href="/" class="btn btn-outline-primary">Shorten one more</a>
+        {{else}}
+        <a href="/" class="btn btn-outline-primary">Or Generate A New One</a>
+    {{/unless}}
   </div>
 </div>
 
